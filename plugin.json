@@ -1,0 +1,13 @@
+{
+  "name": "octopus-deploy-agent",
+  "description": "Octopus Deploy agent for GitHub",
+  "version": "0.0.1",
+  "author": {
+    "name": "Octopus Deploy",
+    "email": "support@octopus.com"
+  },
+  "license": "MIT",
+  "agents": "agents/",
+  "skills": "skills/",
+  "hooks": "hooks.json"
+}
