@@ -9,8 +9,8 @@ mcp-servers:
     command: npx
     args: ["-y", "@octopusdeploy/mcp-server"]
     env:
-      OCTOPUS_API_KEY: "$OCTOPUS_API_KEY"
-      OCTOPUS_SERVER_URL: "$OCTOPUS_SERVER_URL"
+      OCTOPUS_API_KEY: "$COPILOT_MCP_OCTOPUS_API_KEY"
+      OCTOPUS_SERVER_URL: "$COPILOT_MCP_OCTOPUS_SERVER_URL"
     tools: ["*"]
     oidc: false
 ---
