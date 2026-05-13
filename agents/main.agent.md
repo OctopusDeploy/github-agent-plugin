@@ -1,17 +1,17 @@
---- 
+---
 name: octopus-deploy-agent
 description: Helps users inspect, query, and diagnose Octopus Deploy instances
 disable-model-invocation: true
 tools: ["bash", "view", "edit", "octopus-deploy-mcp/*"]
-mcp-servers: 
-  octopus-deploy-mcp: 
-    type: stdio 
+mcp-servers:
+  octopus-deploy-mcp:
+    type: stdio
     command: npx
     args: ["-y", "@octopusdeploy/mcp-server"]
     env:
       OCTOPUS_API_KEY: "$OCTOPUS_API_KEY"
       OCTOPUS_SERVER_URL: "$OCTOPUS_SERVER_URL"
-    tools: ["*"] 
+    tools: ["*"]
     oidc: false
 ---
 
