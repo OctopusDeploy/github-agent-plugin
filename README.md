@@ -36,7 +36,7 @@ The plugin comes with a set of skills to help with:
 ## Examples
 
 Here is an example of what you can do with the Octopus Intelligence Agent:
-📊 **Show me the deployment status of this PR, and when it was deployed to tenant X**
-🔍 **Investigate and diagnose why it has failed**
-🔧 **Use the appropriate runbook to fix the failure**
-🚀 **Redeploy to tenant**
+- 📊 **Show me the deployment status of this PR, and when it was deployed to tenant X**
+- 🔍 **Investigate and diagnose why it has failed**
+- 🔧 **Use the appropriate runbook to fix the failure**
+- 🚀 **Redeploy to tenant**
