@@ -327,6 +327,130 @@ Octopus is API-first - everything in the UI is available via API:
 - Push packages
 - Manage resources
 
+### Octopus Variable Substitution Syntax
+Octopus uses #{VariableName} syntax for variable substitution in steps and templates:
+
+Basic: #{MyVariable}
+Nested: #{Outer#{Inner}}
+Escaped(literal) : ##{NotReplaced} renders as #{NotReplaced}
+
+Conditionals:
+#{if Octopus.Environment.Name == "Production"}production config#{/if}
+#{if EnableFeature}enabled#{else}disabled#{/if}
+#{unless IsDisabled}active#{/unless}
+
+Falsy values: undefined, empty string, "False", "No", "0"
+
+Iteration(comma-separated or indexed variables) :
+#{each server in Servers}
+    - #{server}
+#{/each}
+Loop variables: Octopus.Template.Each.Index, .First, .Last
+
+Filters: #{Octopus.Environment.Name | ToLower}
+Available: ToLower, ToUpper, ToBase64, FromBase64, HtmlEscape, XmlEscape, JsonEscape, Markdown, Trim, Truncate, Replace
+
+Index lookup: #{MyPassword[#{UserName}]}
+Calculations: #{calc Value1 + Value2}
+
+### Output Variables (Passing Data Between Steps)
+Scripts can set output variables that subsequent steps can read.
+
+Reading output from a previous step uses the pattern:
+Octopus.Action[StepName].Output.VariableName
+
+In variable binding/substitution:
+#{Octopus.Action[StepA].Output.TestResult}
+
+## Octopus UI navigation
+
+When directing user to navigate Octopus Deploy UI, refer to the following locations accurately:
+
+<Menu>
+<Deploy level=1>
+Tenants
+Tenant Tag Sets
+Variable Sets
+<Infrastructure level=2>
+Overview
+Deployment Targets
+Environments
+Machine Policies
+Machine Proxies
+Workers
+Worker Pools
+</Infrastructure>
+<Manage level=2>
+Accounts
+Build Information
+Certificates
+External Feeds
+Git Credentials
+Lifecycles
+Packages
+Script Modules
+Step Templates
+</Manage>
+</Deploy>
+
+<SpecificProject level=2 name="{ReplaceWithProjectName}">
+Dashboard
+Process
+Channels
+Releases
+Feature Toggles
+Triggers
+Freezes
+Settings
+Operations
+Runbooks
+Runbook Triggers
+Ephemeral Environments
+Project Variables
+Tenant Variables
+Variable Sets
+All Variables
+Variable Preview
+Tenants
+Tasks
+Insights
+Project Settings
+Version Control
+</SpecificProject>
+<Insights level=1>
+</Insights>
+<PlatformHub level=1>
+</Platform Hub>
+<Configuration level=1 description="Octopus Instance Configuration">
+</Configuration>
+</Menu>
+
+## Navigation Path Instructions
+
+When directing users to UI locations, you MUST follow these formatting rules:
+
+1. **Use the actual project name from context**: The `<SpecificProject name="{ReplaceWithProjectName}">` placeholder means you should use the ACTUAL project name provided in the OctopusContext. Never say "ReplaceWithProjectName" or "In" - use the real project name.
+
+2. **Format navigation paths with arrows**: Use the format "ItemName -> SubItem -> Action"
+   - Top-level items (level=1): Deploy, Insights, PlatformHub, Configuration
+   - Sub-items (level=2): Infrastructure, Manage, and the project-specific menu
+   - Project items: Process, Channels, Releases, Settings, Runbooks, etc.
+
+3. **Examples of CORRECT navigation instructions**:
+   - "MyProject -> Process -> step 'Run a Script'" (when project name is "MyProject")
+   - "Acme Website -> Process -> step 'Deploy to Azure'" (when project name is "Acme Website")
+   - "Deploy -> Infrastructure -> Deployment Targets"
+   - "Deploy -> Manage -> Accounts"
+   - "HelloWorld -> Project Variables"
+
+4. **Examples of INCORRECT navigation instructions**:
+   - "In -> Process -> step Run a Script" ❌ (Don't use "In" as a prefix)
+   - "{ReplaceWithProjectName} -> Process" ❌ (Don't use the literal placeholder)
+   - "Project -> Process" ❌ (Use the actual project name, not "Project")
+   - "the Process tab" ❌ (Use full navigation path with arrows)
+
+5. **When to bold entity names**: Bold the project name, step names, and other specific entity names in your instructions for clarity. Example: "Edit step **Run a Script** in **MyProject** -> **Process**"
+
 ## Related Knowledge Files
 
 For detailed information on specific topics, refer to these companion files:
@@ -339,3 +463,4 @@ For detailed information on specific topics, refer to these companion files:
 - [octopus-patterns.md](./octopus-patterns.md) - Deployment patterns and best practices
 - [octopus-api.md](./octopus-api.md) - REST API, CLI, and automation
 - [octopus-ai.md](./octopus-ai.md) - AI Assistant, MCP Server, Recovery Agent
+- [Public Documentation](https://github.com/OctopusDeploy/docs) - Comprehensive user documentation and best practices
